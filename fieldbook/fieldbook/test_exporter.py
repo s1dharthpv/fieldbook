@@ -40,6 +40,7 @@ from fieldbook.fieldbook.exporter import (
 	naming_series_options,
 	property_setter_fields,
 	render_series,
+	render_workbook,
 	required_label,
 	resolve_doctype,
 	safe_cell,
@@ -1100,6 +1101,30 @@ class TestExporter(FrappeTestCase):
 		self.assertGreater(len(names), 30)
 		for doctype in names:
 			self.assert_valid(doctype)
+
+	def test_text_starting_with_an_equals_sign_is_never_a_formula(self):
+		# a DocType label, default or Select option is author-controlled text in a shared file
+		document = build_document("ToDo")
+		hostile = ('=HYPERLINK("http://example.com")', "varchar(140)", "No", "=1+1", "=2+2")
+		with patch("fieldbook.fieldbook.exporter.field_rows", return_value=[hostile]):
+			content, _ = render_workbook(document)
+		sheet = load_workbook(io.BytesIO(content))["ToDo"]
+		for cell in sheet[2]:
+			if str(cell.value).startswith("="):
+				self.assertEqual(cell.data_type, "s", cell.coordinate)
+		self.assertEqual(sheet["D2"].value, "=1+1")
+		self.assertNotEqual(sheet["A2"].data_type, "f")
+
+	def test_the_pack_download_checks_the_role_before_reading_its_input(self):
+		# bad input must not get a friendly "select a DocType" answer from someone without the role
+		frappe.set_user("Guest")
+		in_test, frappe.flags.in_test = frappe.flags.in_test, False
+		try:
+			with self.assertRaises(frappe.PermissionError):
+				download_pack("this is not json")
+		finally:
+			frappe.flags.in_test = in_test
+			frappe.clear_messages()
 
 	def test_illegal_characters_and_oversized_text_are_made_safe(self):
 		self.assertEqual(safe_cell("a\x00b\x0bc"), "abc")

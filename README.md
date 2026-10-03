@@ -41,9 +41,10 @@ real data. See [PRIVACY.md](PRIVACY.md).
 
 ### What to expect
 
-- Fields are ordered required first, then optional, each in DocType order. Hidden, layout, virtual
-  and column-less fields are left out on purpose: they hold no data in the database, so they have
-  nothing to put in a payload.
+- Fields are ordered required first, then optional, each in DocType order. Hidden, layout and virtual
+  fields are left out, and so are fields without a database column (a Single DocType has no table, so
+  it keeps all its data fields). They hold no data in the database, so they have nothing to put in a
+  payload.
 - **Required** is `Yes`, `No` or `Conditional` (mandatory only when another field says so; the
   Description says when). Rules enforced in code rather than in the DocType cannot be detected.
 - **Description** combines the label, link and select hints, Frappe's own help text, and whether the
@@ -55,7 +56,8 @@ real data. See [PRIVACY.md](PRIVACY.md).
 - **Schema** carries `enum` for Select fields, `format` for dates and emails, and `maxLength`.
 - **Version stamp.** The Schema sheet says when the file was generated and from which Frappe and app
   versions and database engine (in `description` and a machine-readable `x-generated-from`), so a
-  reader knows which site version it describes. It contains no site name, company or user.
+  reader knows which site version it describes. It lists the installed apps by name, and contains no
+  site name, company or user. A custom app's name can identify its owner, so check before sharing.
 - **Data types are what your database reports.** They vary with the database engine and the Frappe
   version, and so can the fields themselves: for example `Sales Invoice.customer` is required in
   Frappe 16 but not in 15. Each file records which version it came from.

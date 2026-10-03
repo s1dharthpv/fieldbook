@@ -13,8 +13,9 @@ Fieldbook does not collect, store or send data.
 - **What a workbook does reveal.** Field names, labels, Select options and help texts are taken from
   your DocType definitions as they are, so they show your customisations and may contain business
   terms. The Schema sheet's version stamp states the date, the Frappe and app versions and the
-  database engine and version; it contains no site name, company or user. Treat a workbook like any
-  technical document before you share it.
+  database engine and version, and lists the installed apps by name; it contains no site name, company or
+  user. Treat a workbook like any technical document before you share it, and remember that a custom
+  app's name can identify its owner.
 - **Access.** Only users with the System Manager role can open the page or call its methods.
 
 ## Publisher
