@@ -29,7 +29,7 @@ or an asset that is not in this repository yet.
 - **Privacy policy URL:** https://github.com/s1dharthpv/fieldbook/blob/main/PRIVACY.md (works once the repository is public)
 - **Logo:** `docs/logo/fieldbook.png` (512 x 512, square, centred, no text; SVG source in `docs/logo/fieldbook.svg`)
 - **Screenshots:** see `docs/screenshots`
-- **Demo video:** TODO. A short recording of picking a DocType and downloading the workbook
+- **Demo video:** `docs/demo/fieldbook-demo.mp4` (20 seconds, 1100 x 860), at https://github.com/s1dharthpv/fieldbook/blob/main/docs/demo/fieldbook-demo.mp4. The Frappe Cloud listing has no video field, so the link goes in the Description.
 - **Publisher and contact details:** Sidharth PV, contact sidharth.thamban@gmail.com. Copyright holder in `license.txt` is Sidharth PV.
 - **Name uniqueness:** no app called "Fieldbook" was in the public Marketplace list on 2026-10-03 (364 apps). Frappe confirms the name when the app is submitted.
 

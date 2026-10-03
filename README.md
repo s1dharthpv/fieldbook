@@ -12,6 +12,8 @@ JSON Schema, with your custom fields included.
 
 ![Fieldbook page](docs/screenshots/fieldbook-page.png)
 
+[Watch the 20-second demo](docs/demo/fieldbook-demo.mp4)
+
 Open **Fieldbook** (`/app/fieldbook` on Frappe 15, `/desk/fieldbook` on Frappe 16; System Manager
 only), choose a DocType, check the preview and click **Export Workbook**. The file has three sheets:
 
