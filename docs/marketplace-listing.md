@@ -18,11 +18,12 @@ or an asset that is not in this repository yet.
   DocTypes at once as a zip with an index. Optional standard fields add `docstatus`, `owner` and the
   like. Each file records the Frappe and app versions and the database it came from.
 
-  Hidden, layout, virtual and column-less fields are left out on purpose: they hold no data in the
-  database, so there is nothing to put in a payload.
+  Hidden, layout and virtual fields are left out, and so are fields without a database column: they
+  hold no data in the database, so there is nothing to put in a payload.
 
-  Fieldbook stores nothing, reads no documents and sends nothing off your site. Only System Managers
-  can use it.
+  Fieldbook stores nothing and sends nothing off your site. It reads DocType definitions and your
+  default currency, country and language, never your business records. Only System Managers can use
+  it. Works on Frappe 15 and 16.
 
 - **Category:** TODO choose the closest available (developer tools or documentation)
 - **Support URL:** https://github.com/s1dharthpv/fieldbook/issues (works once the repository is public)

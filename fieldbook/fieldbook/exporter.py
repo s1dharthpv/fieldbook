@@ -733,9 +733,21 @@ def safe_cell(value):
 	return value
 
 
+def append_row(sheet, values):
+	"""Append a row of safe cells. Text that starts with "=" is stored as text, never as a formula.
+
+	Labels, defaults and Select options come from DocType definitions, and the workbook is meant to
+	be shared, so a definition must not be able to put a formula into the reader's Excel.
+	"""
+	sheet.append([safe_cell(value) for value in values])
+	for cell in sheet[sheet.max_row]:
+		if isinstance(cell.value, str) and cell.value.startswith("="):
+			cell.data_type = "s"
+
+
 def write_json_sheet(worksheet, data):
 	for line in json.dumps(data, indent=2, ensure_ascii=False).split("\n"):
-		worksheet.append([safe_cell(line)])
+		append_row(worksheet, [line])
 	worksheet.column_dimensions["A"].width = TEXT_SHEET_WIDTH
 
 
@@ -756,7 +768,7 @@ def render_workbook(document):
 	for cell in sheet[1]:
 		cell.font, cell.fill = bold, yellow
 	for row in field_rows(document):
-		sheet.append([safe_cell(value) for value in row])
+		append_row(sheet, row)
 	for letter, width in zip("ABCDE", COLUMN_WIDTHS, strict=False):
 		sheet.column_dimensions[letter].width = width
 
@@ -882,7 +894,7 @@ def render_index(rows):
 	sheet.title = "Index"
 	bold, yellow = Font(bold=True), PatternFill("solid", fgColor="FFFFFF00")
 	for row in rows:
-		sheet.append([safe_cell(value) for value in row])
+		append_row(sheet, row)
 	for cell in sheet[1]:
 		cell.font, cell.fill = bold, yellow
 	for letter, width in zip("ABCDEFGH", (32, 18, 16, 8, 10, 13, 8, 46), strict=False):
@@ -895,6 +907,7 @@ def render_index(rows):
 @frappe.whitelist()
 def download_pack(doctypes: str, include_standard: int = 0, customisations_only: int = 0):
 	"""Send a zip of workbooks for several DocTypes."""
+	frappe.only_for("System Manager", message=True)
 	try:
 		names = frappe.parse_json(doctypes)
 	except ValueError:  # not JSON at all
