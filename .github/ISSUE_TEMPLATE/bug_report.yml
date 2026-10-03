@@ -1,0 +1,31 @@
+name: Bug report
+description: Something in Fieldbook does not work as expected
+labels: [bug]
+body:
+  - type: input
+    id: versions
+    attributes:
+      label: Frappe, ERPNext and Fieldbook versions
+      placeholder: Frappe 16.x, ERPNext 16.x, Fieldbook 0.1.0
+    validations:
+      required: true
+  - type: input
+    id: database
+    attributes:
+      label: Database
+      placeholder: MariaDB 11.8, Postgres, SQLite
+    validations:
+      required: true
+  - type: input
+    id: doctype
+    attributes:
+      label: DocType you exported
+    validations:
+      required: true
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened and what did you expect
+      description: Please do not paste real customer data.
+    validations:
+      required: true
